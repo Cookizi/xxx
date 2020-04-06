@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>xxx</title>
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/metro/easyui.css">
+</head>
+
+<body class="easyui-layout">
+<div data-options="region:'north',split:true" style="height:100px;"></div>
+<div data-options="region:'west',split:true" style="width:50%;">
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'north',split:true,title:'任务搜索',collapsible:false" style="width:100px;padding:10px">
+            站点:<select id="siteSelect" class="easyui-combobox" style="width: 30%">
+        </select>
+            分类:<select id="categorySelect" class="easyui-combobox" style="width: 30%"></select>
+            <a href="#" class="easyui-linkbutton" onclick="searchTask()">搜索</a>
+            <div class="easyui-linkbutton" onclick="importTask()">导入任务</div>
+
+        </div>
+        <div data-options="region:'center'">
+            <table style="width:100%;" id="taskTable">
+                <thead>
+                <tr>
+                    <th data-options="field:'id',hidden:true"></th>
+                    <th data-options="field:'taskUrl',width:100,align:'left'">Url</th>
+                    <th data-options="field:'site',width:30,align:'center'">站点</th>
+                    <th data-options="field:'category',width:40,align:'center'">类别</th>
+                    <th data-options="field:'currentPage',align:'center'">当前处理页码</th>
+                    <th data-options="field:'status',formatter:taskStatusFmt,align:'center'">状态</th>
+                    <th data-options="field:'none',formatter:taskDownloadFtm,align:'center'">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div data-options="region:'center'">
+    <div id="export" class="easyui-linkbutton" onclick="exportVideo()">导出</div>
+    <div id="renew" class="easyui-linkbutton" onclick="renew()">重新下载当前页</div>
+
+    <table style="width:100%;" id="videoDataTable">
+        <thead>
+        <tr>
+            <th data-options="field:'id',hidden:true"></th>
+            <th data-options="field:'pageUrl',width:100,align:'left'">Url</th>
+            <th data-options="field:'videoPath',width:60,align:'left'">视频地址</th>
+            <th data-options="field:'filename',width:40,align:'left'">文件名</th>
+            <th data-options="field:'createdAt',align:'center',formatter:timeFmt">创建时间</th>
+            <th data-options="field:'status',formatter:taskStatusFmt,align:'center'">状态</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<div id="importTask" class="easyui-dialog" style="width:800px;height:400px;"
+     data-options="closed:true,buttons:'#btn'" onResize="$('#taskInput').css('width','100%');">
+    <div style="width: 100%;height: 100%">
+        <textarea id="taskInput" style="width:100%;height: 100%; word-wrap: normal;
+overflow: hidden;"></textarea>
+    </div>
+
+</div>
+<div id="btn">
+        <span id="aira2Type" style="display: none">
+            Aria2格式:<input id="isAira2Type" type="checkbox" checked="checked" onchange="exportVideo()"/>
+        </span>
+    <a href="#" id="saveTask" class="easyui-linkbutton" onclick="saveTask()">保存</a>
+    <a href="#" class="easyui-linkbutton" onclick="$('#taskInput').val('');$('#importTask').panel('close');">关闭</a>
+</div>
+
+<div id="taskPage" class="easyui-dialog" data-options="closed:true,buttons:'#tasBtn'">
+    <input type="hidden" id="taskId"/>
+    <div>
+        <span>起始页</span><input type="text" id="startPage"/>
+    </div>
+    <div>
+        <span>结束页</span><input type="text" id="endPage"/>
+    </div>
+</div>
+<div id="tasBtn">
+    <a href="#" id="startTask" class="easyui-linkbutton" onclick="startTask()">开始</a>
+    <a href="#" class="easyui-linkbutton" onclick="$('#taskPage').panel('close');">关闭</a>
+</div>
+</div>
+</body>
+</html>
